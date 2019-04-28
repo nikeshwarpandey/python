@@ -1,4 +1,6 @@
+
 from db import db
+
 
 class ItemModel(db.Model):
     __tablename__ = 'items'
@@ -10,6 +12,7 @@ class ItemModel(db.Model):
     store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
     store = db.relationship('StoreModel')
 
+
     def __init__(self, name, price, store_id):
         self.name = name
         self.price = price
@@ -20,7 +23,8 @@ class ItemModel(db.Model):
 
     @classmethod
     def find_by_name(cls, name):
-        return cls.query.filter_by(name=name).first()
+        return cls.query.filter_by(name=name).first()  #SELECT * FROM items WHERE name=name LIMIT 1
+
 
     def save_to_db(self):
         db.session.add(self)
@@ -29,3 +33,5 @@ class ItemModel(db.Model):
     def delete_from_db(self):
         db.session.delete(self)
         db.session.commit()
+
+        
